@@ -9,6 +9,7 @@
         "ranges": "cpp",
         "span": "cpp",
         "source_location": "cpp",
-        "stacktrace": "cpp"
+        "stacktrace": "cpp",
+        "format": "cpp"
     }
 }
