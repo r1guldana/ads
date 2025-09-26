@@ -18,18 +18,18 @@ int main(){
     }
 }
     while(l<r){
-        long long mid = l+(r-l)/2 ; // == (l+r)/2 ;
+        long long K = l+(r-l)/2 ; // == (l+r)/2 ;
         long long hour = 0;
 
         for (int i = 0; i < N; i++)
         {
-            hour = hour + (bags[i]+mid-1)/mid;
+            hour = hour + (bags[i]+K-1)/K;
         }
         if(hour <= H){
-            r = mid ;
+            r = K ;
         }
         else{
-            l = mid + 1 ;
+            l = K + 1 ;
         }
         
 
