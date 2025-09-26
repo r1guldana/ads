@@ -4,7 +4,7 @@ using namespace std ;
 int main(){
     int n, q ;
     cin >> n >> q ;
-    vector<int> lines(n) ;
+    vector<long long> lines(n) ;
     for(int i = 0 ; i < n ; i++){
         
         cin >> lines[i] ;
@@ -13,7 +13,7 @@ int main(){
     
    while (q--)
         {
-            int count = 0;
+            long long count = 0;
             int l1, r1, l2, r2;
             cin >>l1>> r1>> l2>> r2;
         
