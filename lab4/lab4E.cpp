@@ -1,4 +1,6 @@
 #include <iostream>
+#include <queue>
+#include <algorithm>
 using namespace std ;
 class Node{
     public:
@@ -9,84 +11,76 @@ class Node{
         left = NULL;
         right=NULL;
     }
+   
 };
 
 class BST {
     
     public:
-    Node* root;
-    Node *nodes[10001];
-    int lvl_count[10001];
+    Node* root; 
 
     BST() {
         root = NULL;
-        for(int i = 0; i < 1001; i++) {
-            nodes[i] = NULL;
-            lvl_count[i] = 0;
+    }
+
+Node* find_node(Node*cur, int val){
+    if (cur == NULL) return NULL;
+    if (cur->data == val) return cur;
+    Node*left_side = find_node(cur->left, val);
+    if(left_side!= NULL) return left_side;
+    return find_node(cur->right, val) ;
+
+
+}
+
+    int addNode(int x, int y, int z){
+        Node* parent_node = find_node(root, x) ;
+       if(parent_node!= NULL){
+
+        if(z == 0){
+            parent_node->left = new Node(y);
+        }
+        else{parent_node->right = new Node(y);
         }
     }
-
-void dfs(Node*node, int lvl){
-    
-    if(node==NULL) return ;
-
-    lvl_count[lvl]++ ;
-
-    dfs(node->left, lvl + 1);
-    dfs(node->right,lvl + 1);
-}
-int max_width(){
-    for(int i = 0 ; i<10001; i++){
-        lvl_count[i] = 0 ;
     }
 
-    dfs(root, 0);
 
-    int max_w = 0;
-
-    for(int i = 0; i<10001; i++){
-        if(lvl_count[i] > max_w){
-            max_w = lvl_count[i];
+     int find_width(Node*node ){
+        if(node == NULL) return 0;
+    queue<Node*> que ;
+    int max_width = 0 ;
+    que.push(node);
+    while(!que.empty()){
+        int count =  (int)que.size(); 
+        max_width = max(max_width, count);
+        for(int i = 0 ; i<count; i++) {
+            Node * cur = que.front();
+            que.pop();
+            if (cur->left)  que.push(cur->left);
+            if (cur->right) que.push(cur->right);
         }
     }
-    return max_w ;
-}
+         return max_width ;
+
+    }
+
 };
 
 int main(){
     BST bst ;
     int n ;
     cin >> n;
+
+     bst.root = new Node(1);
     
-    bst.nodes[ 1] = new Node(1);
-    bst.root = bst.nodes[1];
-
-    for (int i = 0 ; i<n-1; i++){
-        int x ,y ,z ;
-        cin >> x >> y>>z ;
-
-        if(bst.nodes[x]==NULL){
-            bst.nodes[x] = new Node(x);
-        }
-        if(bst.nodes[y]==NULL){
-            bst.nodes[y] = new Node(y);
-        }
-        if (z == 0){
-            bst.nodes[x]->left = bst.nodes[y];
-        }
-        else{
-            bst.nodes[x]->right = bst.nodes[y];
-            }
-            }
-
-    int max_w = bst.max_width();
-    
-     cout << max_w << endl;
-
-     for(int i = 1; i <= n; i++) {
-        if(bst.nodes[i] != NULL) {
-            delete bst.nodes[i];
-        }
+    for (int i = 0; i < n - 1; i++) {
+        int x, y, z;
+        cin >> x >> y >> z;
+        bst.addNode(x, y, z);
     }
+    cout << bst.find_width(bst.root) << endl ;
+    
+
     return 0 ;
 }
