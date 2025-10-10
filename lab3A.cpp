@@ -38,7 +38,7 @@ int main(){
 for (int val= 0 ; val<t ; val++) {
     bool found = false;
     for (int i = 0; i < n; ++i) {
-        int j = binarySearch(snake[i], arr[val], i % 2 == 1); // true если строка возрастающая
+        int j = binarySearch(snake[i], arr[val], i % 2 == 1); 
         if (j != -1) {
             cout << i << " " << j << endl;
             found = true;

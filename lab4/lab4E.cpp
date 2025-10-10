@@ -33,7 +33,7 @@ Node* find_node(Node*cur, int val){
 
 }
 
-    int addNode(int x, int y, int z){
+    void addNode(int x, int y, int z){
         Node* parent_node = find_node(root, x) ;
        if(parent_node!= NULL){
 
