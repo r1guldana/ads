@@ -10,16 +10,14 @@ bool can_div(const vector<int>& a, int k, long long maxSum){
         }
         if(cur+a[i]>maxSum){
             blocks++ ;
-            cur =a[i] ;
+            cur = a[i] ;
         }
         else{
-             cur += a[i];
+            cur += a[i];
         }
     }
     return blocks <= k ;
 }
-
-
 int main(){
     int n , k ;
     cin >> n >> k ;

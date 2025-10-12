@@ -22,33 +22,38 @@ class MinHeap {
         return a[0];
     }
 
+     int size() { 
+        return a.size(); 
+    }
+
     void insert(int k) {
         a.push_back(k);
         int ind = a.size() - 1;
-        while (ind > 0 && a[ind] > a[parent(ind)]) {
+        while (ind > 0 && a[ind] < a[parent(ind)]) {
             swap(a[ind], a[parent(ind)]);
             ind = parent(ind);
         }
     }
     void heapify(int i) {
-        int largest = i;
+        int smallest = i;
         int l = left(i);
         int r = right(i);
 
-        if (l < a.size() && a[l] > a[largest])
-            largest = l;
-        if (r < a.size() && a[r] > a[largest])
-            largest = r;
+        if (l < a.size() && a[l] < a[smallest])
+            smallest = l;
+        if (r < a.size() && a[r] < a[smallest])
+            smallest = r;
 
-        if (largest != i) {
-            swap(a[i], a[largest]);
-            heapify(largest);
+        if (smallest != i) {
+            swap(a[i], a[smallest]);
+            heapify(smallest);
         }
     }
-    int extractMax() {
+    int extractMin() {
         if(a.empty()) {
             return 0 ;
         }
+
         int root_value = getMin();
         swap(a[0], a[a.size() - 1]);
         a.pop_back();
@@ -58,22 +63,30 @@ class MinHeap {
     }
 };
 int main() {
-    int n, k;
-    cin >> n >> k;
+    int n, m;
+    cin >> n >> m;
     MinHeap *heap = new MinHeap();
     for (int i = 0; i < n; i++) {
         int x;
         cin >> x;
         heap->insert(x);
     }
-    long long sum = 0;
-    for (int i = 0; i < k; i++){
-        int price = heap->extractMax();
-        sum += price;
-        if(price>1){
-            heap->insert(price-1);
-        }
+    int operations = 0 ;
+
+    while(heap->getMin() < m && heap->size()>=2){
+        
+        int d_first = heap->extractMin();
+        int d_second = heap->extractMin();
+        int d_new = d_first  + 2 * d_second ;
+        heap->insert(d_new);
+        operations++ ;  
     }
-    cout << sum << " ";
-    return 0;
+    if(heap -> getMin() < m ){
+            cout << -1 << endl ;
+            return 0 ;
+        }
+    else{
+        cout << operations << endl;
+        }
+        return 0;
 }
