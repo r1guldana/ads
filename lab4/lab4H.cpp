@@ -2,39 +2,48 @@
 
 using namespace std;
 
-class Node {
+class Node
+{
 public:
     int data;
-    Node *left, *right; 
-    Node(int data) {
+    Node *left, *right;
+    Node(int data)
+    {
         this->data = data;
         left = NULL;
         right = NULL;
-    } 
+    }
 };
 
-class BST {
+class BST
+{
 public:
-    Node* root;
-    
-    BST() {
+    Node *root;
+
+    BST()
+    {
         root = NULL;
     }
-    
-    Node* insert(Node* node, int data) {
-        if(node == NULL) {
+
+    Node *insert(Node *node, int data)
+    {
+        if (node == NULL)
+        {
             return new Node(data);
         }
-        if(data < node->data) {
+        if (data < node->data)
+        {
             node->left = insert(node->left, data);
         }
-        else if(data > node->data) {
+        else if (data > node->data)
+        {
             node->right = insert(node->right, data);
         }
-        return node;      
+        return node;
     }
 
-void inOrder(Node *node) {
+    void inOrder(Node *node)
+    {
         if (node == NULL)
             return;
         inOrder(node->left);
@@ -42,36 +51,38 @@ void inOrder(Node *node) {
         inOrder(node->right);
     }
 
-    void transform(Node* node, int& sum){
-        if(node == NULL) return ;
+    void transform(Node *node, int &sum)
+    {
+        if (node == NULL)
+            return;
         transform(node->right, sum);
-        sum += node->data ;
-        node->data = sum ;
+        sum += node->data;
+        node->data = sum;
         transform(node->left, sum);
     }
-    void reverseInOrder(Node *node) {
-    if (node == NULL) return;
-    reverseInOrder(node->right);
-    cout << node->data << " ";
-    reverseInOrder(node->left);
-}
-
-
-    
+    void reverseInOrder(Node *node)
+    {
+        if (node == NULL)
+            return;
+        reverseInOrder(node->right);
+        cout << node->data << " ";
+        reverseInOrder(node->left);
+    }
 };
 
-int main(){
-    int n ; 
+int main()
+{
+    int n;
     cin >> n;
     BST bst;
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         int val;
         cin >> val;
         bst.root = bst.insert(bst.root, val);
     }
-    int sum = 0 ;
+    int sum = 0;
     bst.transform(bst.root, sum);
-    
-    bst.reverseInOrder(bst.root);
 
+    bst.reverseInOrder(bst.root);
 }
