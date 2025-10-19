@@ -8,7 +8,7 @@ void sort_column(vector<vector<int> > &matrix, int col_index, int l, int r)
     int i = l;
     int j = r;
 
-    while (i <= j)
+    while (i < j)
     {
         while (matrix[i][col_index] > mid)
             i++;
