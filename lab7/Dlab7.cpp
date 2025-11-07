@@ -14,6 +14,7 @@ bool compare(const student &a, const student &b){
         return a.l_name < b.l_name;
     return a.f_name< b.f_name;
 }
+/*
 void merge(vector<student> &a, int l, int mid, int r){
     int n1 = mid - l + 1;
     int n2 = r - mid;
@@ -49,13 +50,15 @@ void merge(vector<student> &a, int l, int mid, int r){
         k++;
     }
 }
+
 void merge_sort(vector<student> &a, int l, int r){
     if (l >= r) return;
     int mid = l + (r - l) / 2;
     merge_sort(a, l, mid);
     merge_sort(a, mid + 1, r);
-    merge(a, l, mid, r);
+   
 }
+    */
 double gpa( const string &grade){
     if (grade == "A+") return 4.0;
     if (grade == "A") return 3.75;
@@ -71,7 +74,7 @@ double gpa( const string &grade){
 int main(){
     int n;
     cin >> n;
-    vector<student> list;
+    vector <student> list;
     for (int i = 0; i < n; i++)
     {
         string first , second;
@@ -94,10 +97,16 @@ int main(){
             list.push_back(st); 
     }
     if(!list.empty()){
-        merge_sort(list, 0 , n-1);
+        sort(list.begin(), list.end(), [](const student& a, const student& b) {
+            if (a.gpa != b.gpa)
+                return a.gpa < b.gpa;
+            if (a.l_name != b.l_name)
+                return a.l_name < b.l_name;
+                return a.f_name< b.f_name;
+        }); 
+       // sort(list.begin(), list.end(), compare);
     }
-    for (int i = 0; i < list.size(); i++)
-    {
+    for (int i = 0; i < list.size(); i++){
         cout<<list[i].l_name<<" "<< list[i].f_name<<" "
         <<fixed << setprecision(3) << list[i].gpa << endl;
     }
