@@ -23,17 +23,18 @@ string possible_names(string city, string P){
     //vector<int> prfx_P = prefix_func(P);
     // vector<int> prfx_city = prefix_func(city);
     vector<int> prefix = prefix_func(s);
-    int len = prefix[s.size()-1];
-    if(len>0 && len>= city.length()){
+    int len = prefix.back();
+    if(len>0){
         string suffix = P.substr(P.length() - len);
         if(city.substr(0, len) == suffix) return city;
     }
-
+/*
     for(int i = m+1 ; i<s.size(); i++){
         if(prefix[i]==m ){ 
             return city;
         }
     }
+*/
     return "";
 }
 int main(){
@@ -41,9 +42,10 @@ int main(){
     cin.tie(NULL);
     string P;
     cin>> P ;
+    transform(P.begin(), P.end(), P.begin(), ::tolower);
     int N;
     cin>>N;
-    vector<string>cities(N);
+    vector<string>cities;
     vector<string> pssbl_n ;
     for (int i = 0; i < N; i++)
     {
@@ -52,14 +54,32 @@ int main(){
         transform(Lower.begin(), Lower.end(), Lower.begin(), ::tolower);
         cities.push_back(Lower);
     }
+    int max_len = 0;
+    vector<string> candidates;
     for (int i = 0; i < N; i++)
     {
         string name = possible_names(cities[i], P);
-        if(!name.empty()) pssbl_n.push_back(name);
+        if(!name.empty()) {
+          pssbl_n.push_back(name);
+          string s = cities[i] + "#" + P;
+            vector<int> prefix = prefix_func(s);
+            int match_len = prefix[s.size() - 1];
+            
+            if (match_len > max_len) {
+                max_len = match_len;
+                candidates.clear();
+                candidates.push_back(cities[i]);
+            }
+            else if (match_len == max_len) {
+                candidates.push_back(cities[i]);
+          }
+      }
     }
-    cout << pssbl_n.size()<<endl;
-        for(int i = 0 ; i< pssbl_n.size(); i++ ){
-        cout << pssbl_n[i] << endl;
+    cout << candidates.size()<<endl;
+        for(int i = 0 ; i< candidates.size(); i++ ){
+          string name = candidates[i];
+          if(!name.empty()) name[0] = toupper(name[0]);
+        cout << name << endl;
     }
     
     return 0;
