@@ -18,30 +18,42 @@ vector<int> prefix_func(string s){
     }
     return pi;
 }
+bool find(vector<int>p, int count, int m){
+    bool found = false;
+    for (int val : p) {
+        if (val == m) {
+            found = true;
+            break;
+        }
+    }
+    if (found) return true;
+    return false;
+}
+    
 int min_num(const string& A, const string& B){
     string repeat_A = A;
     int count = 1;
-    int m = B.size();
+    int m =(int)B.size();
     int n = repeat_A.size();
-
-    string s = B + "#" + repeat_A;
-    vector<int>p = prefix_func(s);
-    while (n<m+A.size())
+    
+    while (n<m)
     {
-        n+=A.size();  // B substring
+        repeat_A += A;
+        n+=A.size(); // B substring
         count++;
     }
+    string s = B + "#" + repeat_A;
+    vector<int>p = prefix_func(s);
+      
+    if(find(p, count, m)) return count;
     
-    if(p.back()== m) {
-        return count ;
-    }
-    
-        repeat_A+=A ;
-        count++ ;   
-        s = B + "#"+repeat_A;
-        p = prefix_func(s);
-        if(p.back() == m) return count;
-        else{return -1;}
+    repeat_A+=A ;
+    count++ ;   
+    s = B + "#" + repeat_A;
+    p = prefix_func(s);
+
+    if(find(p, count, m)) return count;
+       
     
     return -1;
 }
