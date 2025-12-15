@@ -6,14 +6,14 @@ struct student{
     int subjects;
     double gpa;
 };
-
+/*
 bool compare(const student &a, const student &b){
     if (a.gpa != b.gpa)
         return a.gpa < b.gpa;
     if (a.l_name != b.l_name)
         return a.l_name < b.l_name;
     return a.f_name< b.f_name;
-}
+} */
 /*
 void merge(vector<student> &a, int l, int mid, int r){
     int n1 = mid - l + 1;
@@ -29,7 +29,7 @@ void merge(vector<student> &a, int l, int mid, int r){
     int j = 0;
     int k = l;
     while (i < n1 && j < n2){
-        if (compare(L[i], R[j])){
+        if (L[i] != R[j]){
             a[k] = L[i];
             i++;
         }
@@ -50,15 +50,21 @@ void merge(vector<student> &a, int l, int mid, int r){
         k++;
     }
 }
-
+*/
 void merge_sort(vector<student> &a, int l, int r){
     if (l >= r) return;
     int mid = l + (r - l) / 2;
-    merge_sort(a, l, mid);
-    merge_sort(a, mid + 1, r);
-   
+   // merge_sort(a, l, mid);
+   // merge_sort(a, mid + 1, r);
+   sort(a.begin(), a.end(),[](const student &a, const student &b){
+    if (a.gpa != b.gpa)
+        return a.gpa < b.gpa;
+    if (a.l_name != b.l_name)
+        return a.l_name < b.l_name;
+    return a.f_name< b.f_name;});
 }
-    */
+
+    
 double gpa( const string &grade){
     if (grade == "A+") return 4.0;
     if (grade == "A") return 3.75;
@@ -97,14 +103,7 @@ int main(){
             list.push_back(st); 
     }
     if(!list.empty()){
-        sort(list.begin(), list.end(), [](const student& a, const student& b) {
-            if (a.gpa != b.gpa)
-                return a.gpa < b.gpa;
-            if (a.l_name != b.l_name)
-                return a.l_name < b.l_name;
-                return a.f_name< b.f_name;
-        }); 
-       // sort(list.begin(), list.end(), compare);
+        merge_sort(list, 0, list.size()-1);
     }
     for (int i = 0; i < list.size(); i++){
         cout<<list[i].l_name<<" "<< list[i].f_name<<" "

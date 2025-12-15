@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std ;
 
-const int MAXN = 100000;
+const int MAXN = 1000000;
 vector<int> adj[MAXN];
 bool visited[MAXN];
 int n, m;
